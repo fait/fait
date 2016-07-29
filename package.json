@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/quarterto/fait.git"
   },
-  "keywords": [],
+  "keywords": ["make", "makefile", "fait"],
   "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
   "license": "MIT",
   "bugs": {
