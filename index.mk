@@ -17,3 +17,6 @@ MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 # secondary expansion is really really useful and doesn't get in people's way
 # if they don't want to use it
 .SECONDEXPANSION:
+
+# load fait's utilities
+$(call require, ./variables.mk)
