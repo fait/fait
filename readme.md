@@ -1,7 +1,7 @@
 <h1 align="center">
 	<img src="/logo.png" width="200" alt="fait">
 </h1>
-<center>extensible makefiles with npm</center>
+<h4 align="center">extensible makefiles with npm</h4>
 
 ## installation
 
