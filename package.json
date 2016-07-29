@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.mk",
   "scripts": {
-    "postinstall": "install.sh"
+    "postinstall": "./install.sh"
   },
   "repository": {
     "type": "git",
