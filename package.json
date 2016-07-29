@@ -1,0 +1,23 @@
+{
+  "name": "fait",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mk",
+  "scripts": {
+    "postinstall": "install.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quarterto/fait.git"
+  },
+  "keywords": [],
+  "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quarterto/fait/issues"
+  },
+  "homepage": "https://github.com/quarterto/fait#readme",
+  "dependencies": {
+    "resolve": "^1.1.7"
+  }
+}
