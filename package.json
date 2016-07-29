@@ -1,6 +1,6 @@
 {
   "name": "fait",
-  "version": "1.0.0-pre4",
+  "version": "1.0.0",
   "description": "",
   "main": "index.mk",
   "scripts": {
@@ -10,7 +10,11 @@
     "type": "git",
     "url": "git+https://github.com/quarterto/fait.git"
   },
-  "keywords": ["make", "makefile", "fait"],
+  "keywords": [
+    "make",
+    "makefile",
+    "fait"
+  ],
   "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
   "license": "MIT",
   "bugs": {
