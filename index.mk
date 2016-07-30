@@ -1,8 +1,8 @@
 # where is this folder?
-current-dir = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+~current-dir = $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 # allow node's module resolution algorithm to be used for includes.
-require = $(eval include $(shell $(current-dir)resolve.js $(1)))
+require = $(eval include $(shell $(~current-dir)resolve.js $(1) $(~current-dir)))
 
 # add node_modules to $PATH so we don't have to prefix it everywhere. also set
 # the shell because mac os seems to need it for path to work
@@ -22,4 +22,4 @@ MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 .SECONDEXPANSION:
 
 # load fait's utilities
-$(call require, fait/variables.mk)
+$(call require, ./variables.mk)
