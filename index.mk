@@ -2,19 +2,35 @@
 MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 
 # where is this folder?
-~current-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-
-$(warning $(~current-dir))
+orig-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+current-dir := $(orig-dir)
 
 # allow node's module resolution algorithm to be used for includes.
-define require
-$(eval ~include-path = $(shell $(~current-dir)resolve.js $(1) $(~current-dir)))
-$(eval ~prev-dir := $(~current-dir))
-$(eval ~current-dir := $(dir $(~include-path)))
-$(eval $(warning include-path:$(~include-path) prev-dir:$(~prev-dir) current-dir:$(~current-dir)))
-$(eval include $(~include-path))
-$(eval ~current-dir := $(~prev-dir))
+#
+# eval is slightly quirky in that any variables defined in an eval don't actually
+# get set until after the entire eval has run. so we need to split require into
+# three parts that are eval'd separately.
+#
+# all this dancing around is to make sure that current-dir is actually the
+# directory of the current makefile, without messing around with MAKEFILE_LISTs
+# at tops of makefiles.
+define ~require-pre
+include-path = $(shell $(orig-dir)resolve.js $(1) $(current-dir))
+prev-dir = $(current-dir)
+current-dir = $(dir $(include-path))
 endef
+
+define ~require-post
+current-dir = $(prev-dir)
+endef
+
+define ~require
+$(eval $(~require-pre))
+include $(include-path)
+$(eval $(~require-post))
+endef
+
+require = $(eval $(call ~require, $(1)))
 
 # add node_modules to $PATH so we don't have to prefix it everywhere. also set
 # the shell because mac os seems to need it for path to work
