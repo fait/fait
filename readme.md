@@ -9,11 +9,11 @@
 npm install --save-dev fait
 ```
 
-When it installs, if you don't have a `makefile` already, fait copy its bootstrap makefile to your package directory.
+When it installs, if you don't have a `makefile` already, fait copies its bootstrap makefile to your package directory.
 
 ## usage
 
-fait doesn't do anything out of the box. It's designed to support modular makefiles installed with npm. It provides a Make macro, `require`, that uses Node's module resolution algorithm to include a makefile. For example, if you have a module called `foo` whose `main` is `index.mk`, then
+fait doesn't do anything out of the box. It's designed to support modular makefiles installed with npm. It provides a macro, `require`, that uses Node's module resolution algorithm to include a makefile. So, if you have a module called `foo` whose `main` is `index.mk`, then
 
 ```make
 $(call require, foo)
