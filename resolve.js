@@ -1,10 +1,17 @@
 #!/usr/bin/env node
 
 var resolve = require('resolve');
+var chalk = require('chalk');
+chalk.enabled = true;
 
-var resolved = resolve.sync(process.argv[2], {
-	basedir: process.argv[3] || process.cwd(),
-	extensions: ['.mk'],
-});
+try {
+	var resolved = resolve.sync(process.argv[2], {
+		basedir: process.argv[3] || process.cwd(),
+		extensions: ['.mk'],
+	});
 
-console.log(resolved);
+	console.log(resolved);
+} catch(e) {
+	console.log(chalk.red('✘') + ' ' + chalk.grey(e.message));
+	process.exit(1);
+}

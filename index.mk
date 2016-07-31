@@ -2,12 +2,15 @@
 MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 
 # where is this folder?
-orig-dir := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-current-dir = $(orig-dir)
+~orig-file := $(abspath $(lastword $(MAKEFILE_LIST)))
+~orig-dir := $(dir $(~orig-file))
+
+# for requires in this file we want prev-include-path to point to this directory
+~prev-include-path = $(~orig-file)
 
 # allow node's module resolution algorithm to be used for includes.
 #
-# eval is slightly quirky in that any variables defined in an eval don't actually
+# eval is slightly weird in that any variables defined in an eval don't actually
 # get set until after the entire eval has run. so we need to split require into
 # four parts that are eval'd separately.
 #
@@ -15,22 +18,19 @@ current-dir = $(orig-dir)
 # directory of the current makefile, without messing around with MAKEFILE_LISTs
 # at tops of makefiles.
 define ~require-pre
-include-path = $(shell $(orig-dir)resolve.js $(1) $(current-dir))
-prev-dir = $(current-dir)
-endef
-
-define ~require-pre-2
-current-dir = $(dir $(include-path))
+~include-path = $(shell $(~orig-dir)resolve.js $(1) $(dir $(~prev-include-path)))
 endef
 
 define ~require-post
-current-dir = $(prev-dir)
+~prev-include-path := $(~include-path)
 endef
 
 define ~require
 $(eval $(~require-pre))
-$(eval $(~require-pre-2))
-include $(include-path)
+
+$(if $(findstring ✘, $(~include-path)), $(eval $(error $(~include-path))),)
+
+include $(~include-path)
 $(eval $(~require-post))
 endef
 
@@ -53,5 +53,7 @@ MAKEFLAGS += --no-builtin-rules
 # load fait's utilities
 $(call require, ./variables)
 
-# set current-dir to pwd so that the originating makefile has it correct
-current-dir = $(shell pwd)
+# immediately after this file we're in the entry makefile. it's not been required
+# so prev-include-path won't usually be set for it. we know it's the first
+# makefile in the list by definition though.
+~prev-include-path = $(abspath $(firstword $(MAKEFILE_LIST)))
