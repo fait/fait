@@ -2,11 +2,14 @@
 MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 
 # where is this folder?
-~orig-file := $(abspath $(lastword $(MAKEFILE_LIST)))
-~orig-dir := $(dir $(~orig-file))
+~orig-file = $(abspath $(lastword $(MAKEFILE_LIST)))
+~orig-dir = $(dir $(~orig-file))
 
 # for requires in this file we want prev-include-path to point to this directory
 ~prev-include-path = $(~orig-file)
+
+# the directory of the current file
+~module-dir = $(dir $(~prev-include-path))
 
 # allow node's module resolution algorithm to be used for includes.
 #
@@ -18,11 +21,11 @@ MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 # directory of the current makefile, without messing around with MAKEFILE_LISTs
 # at tops of makefiles.
 define ~require-pre
-~include-path = $(shell $(~orig-dir)resolve.js $(1) $(dir $(~prev-include-path)))
+~include-path = $(shell $(~orig-dir)resolve.js $(1) $(~module-dir))
 endef
 
 define ~require-post
-~prev-include-path := $(~include-path)
+~prev-include-path = $(~include-path)
 endef
 
 define ~require
@@ -51,7 +54,7 @@ MAKEFLAGS += --no-builtin-rules
 .SECONDEXPANSION:
 
 # load fait's utilities
-$(call require, ./variables)
+$(call require, ./utilities)
 
 # immediately after this file we're in the entry makefile. it's not been required
 # so prev-include-path won't usually be set for it. we know it's the first
