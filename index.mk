@@ -60,3 +60,7 @@ $(call require, ./utilities)
 # so prev-include-path won't usually be set for it. we know it's the first
 # makefile in the list by definition though.
 ~prev-include-path = $(abspath $(firstword $(MAKEFILE_LIST)))
+
+# dummy task to ensure that main is always defined first, i.e. is what runs when
+# make is run with no arguments
+main :: ; @:
