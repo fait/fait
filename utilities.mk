@@ -4,4 +4,6 @@ export PATH := $(~module-dir)node_modules/.bin:$(PATH)
 endef
 
 # automatically create a target's folder
-mkdir = @mkdir -p $(@D)
+make-target-dir = @mkdir -p $(@D)
+# backwards compat
+mkdir = $(make-target-dir)
