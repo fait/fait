@@ -1,6 +1,11 @@
+# add a folder to the shell PATH
+define register-bin
+export PATH := $(1):$(PATH)
+endef
+
 # add a module's npm bin to the shell PATH
 define register-npm-bin
-export PATH := $(~module-dir)node_modules/.bin:$(PATH)
+$(eval $(call register-bin, $(~module-dir)node_modules/.bin))
 endef
 
 # automatically create a target's folder
