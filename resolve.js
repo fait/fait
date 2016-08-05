@@ -8,6 +8,10 @@ try {
 	var resolved = resolve.sync(process.argv[2], {
 		basedir: process.argv[3] || process.cwd(),
 		extensions: ['.mk'],
+		packageFilter: function(pkg) {
+			pkg.main = pkg.faitMain || pkg.main;
+			return pkg;
+		}
 	});
 
 	console.log(resolved);
