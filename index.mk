@@ -11,6 +11,14 @@ MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 # the directory of the current file
 ~module-dir = $(dir $(~prev-include-path))
 
+define ~require-pre
+~include-path = $(shell $(~orig-dir)resolve.js $(1) $(~module-dir))
+endef
+
+define ~require-post
+~prev-include-path = $(~include-path)
+endef
+
 # allow node's module resolution algorithm to be used for includes.
 #
 # eval is slightly weird in that any variables defined in an eval don't actually
@@ -20,14 +28,6 @@ MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 # all this dancing around is to make sure that current-dir is actually the
 # directory of the current makefile, without messing around with MAKEFILE_LISTs
 # at tops of makefiles.
-define ~require-pre
-~include-path = $(shell $(~orig-dir)resolve.js $(1) $(~module-dir))
-endef
-
-define ~require-post
-~prev-include-path = $(~include-path)
-endef
-
 define ~require
 $(eval $(~require-pre))
 
