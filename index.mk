@@ -2,8 +2,8 @@
 MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 
 # where is this folder?
-~orig-file = $(abspath $(lastword $(MAKEFILE_LIST)))
-~orig-dir = $(dir $(~orig-file))
+~orig-file := $(abspath $(lastword $(MAKEFILE_LIST)))
+~orig-dir := $(dir $(~orig-file))
 
 # for requires in this file we want prev-include-path to point to this directory
 ~prev-include-path = $(~orig-file)
