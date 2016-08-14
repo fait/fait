@@ -8,6 +8,12 @@ define register-npm-bin
 $(eval $(call register-bin, $(~module-dir)node_modules/.bin))
 endef
 
+
+# filter by match
+define filter-match
+$(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
+endef
+
 # filter out by match
 define filter-out-match
 $(foreach v,$(2),$(if $(findstring $(1),$(v)),,$(v)))
