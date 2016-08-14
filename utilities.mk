@@ -8,7 +8,6 @@ define register-npm-bin
 $(eval $(call register-bin, $(~module-dir)node_modules/.bin))
 endef
 
-
 # filter by match
 define filter-match
 $(foreach v,$(2),$(if $(findstring $(1),$(v)),$(v),))
@@ -23,3 +22,11 @@ endef
 make-target-dir = @mkdir -p $(@D)
 # backwards compat
 mkdir = $(make-target-dir)
+
+# get variables that weren't defined at the start of the make session
+user-defined-variables = $(filter-out $(~built-in-variables), $(.VARIABLES))
+
+# export given variables
+define export-variables
+$(eval export ~dummy $(1))
+endef

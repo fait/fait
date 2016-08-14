@@ -1,3 +1,6 @@
+# The only currently-defined variables are built-ins.
+~built-in-variables := $(.VARIABLES)
+
 # warn about things to help us catch typos.
 MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 
