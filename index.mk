@@ -8,18 +8,19 @@ MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 ~orig-file := $(abspath $(lastword $(MAKEFILE_LIST)))
 ~orig-dir := $(dir $(~orig-file))
 
-# for requires in this file we want prev-include-path to point to this directory
-~prev-include-path = $(~orig-file)
+# for requires in this file we want module-file to point to this directory
+~module-file := $(~orig-file)
 
 # the directory of the current file
-~module-dir = $(dir $(~prev-include-path))
+~module-dir = $(dir $(~module-file))
 
 define ~require-pre
-~include-path = $(shell $(~orig-dir)resolve.js $(1) $(~module-dir))
+~prev-module-file := $(~module-file)
+~module-file := $(shell $(~orig-dir)resolve.js $(1) $(~module-dir))
 endef
 
 define ~require-post
-~prev-include-path = $(~include-path)
+~module-file := $(~prev-module-file)
 endef
 
 # allow node's module resolution algorithm to be used for includes.
@@ -34,9 +35,9 @@ endef
 define ~require
 $(eval $(~require-pre))
 
-$(if $(findstring ✘, $(~include-path)), $(eval $(error $(~include-path))),)
+$(if $(findstring ✘, $(~module-file)), $(eval $(error $(~module-file))),)
 
-include $(~include-path)
+$(eval include $(~module-file))
 $(eval $(~require-post))
 endef
 
@@ -62,7 +63,7 @@ $(call require, ./utilities)
 # immediately after this file we're in the entry makefile. it's not been required
 # so prev-include-path won't usually be set for it. we know it's the first
 # makefile in the list by definition though.
-~prev-include-path = $(abspath $(firstword $(MAKEFILE_LIST)))
+~module-file := $(abspath $(firstword $(MAKEFILE_LIST)))
 
 # dummy task to ensure that main is always defined first, i.e. is what runs when
 # make is run with no arguments
