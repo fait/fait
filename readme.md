@@ -27,6 +27,8 @@ include node_modules/foo/index.mk
 
 fait also sets some helpful defaults and provides useful functions for your makefiles.
 
+When somebody first clones your repo, they won't have fait installed locally. The default bootstrap takes care of that for you by installing fait from npm when trying to `include` it.
+
 ## licence
 
 MIT
