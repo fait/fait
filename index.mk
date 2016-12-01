@@ -65,6 +65,9 @@ $(call require, ./utilities)
 # makefile in the list by definition though.
 ~module-file := $(abspath $(firstword $(MAKEFILE_LIST)))
 
+# provide installed fait version
+fait-version := $(shell awk -v FS=\" '/"version": ".+"/ { print $$4 }' $(~orig-dir)package.json)
+
 # dummy task to ensure that main is always defined first, i.e. is what runs when
 # make is run with no arguments
 main :: ; @:
