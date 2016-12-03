@@ -60,13 +60,15 @@ MAKEFLAGS += --no-builtin-rules
 # load fait's utilities
 $(call require, ./utilities)
 
+# provide installed version of current module
+module-version = $(shell awk -v FS=\" '/"version": ".+"/ { print $$4 }' $(~module-dir)package.json)
+
+fait-version := $(module-version)
+
 # immediately after this file we're in the entry makefile. it's not been required
 # so prev-include-path won't usually be set for it. we know it's the first
 # makefile in the list by definition though.
 ~module-file := $(abspath $(firstword $(MAKEFILE_LIST)))
-
-# provide installed fait version
-fait-version := $(shell awk -v FS=\" '/"version": ".+"/ { print $$4 }' $(~orig-dir)package.json)
 
 # dummy task to ensure that main is always defined first, i.e. is what runs when
 # make is run with no arguments
