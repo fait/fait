@@ -27,7 +27,7 @@ endef
 #
 # eval is slightly weird in that any variables defined in an eval don't actually
 # get set until after the entire eval has run. so we need to split require into
-# four parts that are eval'd separately.
+# several parts that are eval'd separately.
 #
 # all this dancing around is to make sure that current-dir is actually the
 # directory of the current makefile, without messing around with MAKEFILE_LISTs
@@ -37,7 +37,7 @@ $(eval $(~require-pre))
 
 $(if $(findstring ✘, $(~module-file)), $(eval $(error $(~module-file))),)
 
-$(eval include $(~module-file))
+$(eval -include $(~module-file))
 $(eval $(~require-post))
 endef
 
@@ -73,3 +73,8 @@ fait-version := $(module-version)
 # dummy task to ensure that main is always defined first, i.e. is what runs when
 # make is run with no arguments
 main :: ; @:
+
+# this is in the bootstrap, but just in case, define it here as well. when trying
+# to include a module, install it if it doesn't exist or package.json has changed
+node_modules/%/index.mk: package.json
+	npm install $*
