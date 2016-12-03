@@ -30,3 +30,8 @@ user-defined-variables = $(filter-out $(~built-in-variables), $(.VARIABLES))
 define export-variables
 $(eval export ~dummy $(1))
 endef
+
+
+# provide installed version of current module
+module-version = $(shell awk -v FS=\" '/"version": ".+"/ { print $$4 }' $(~module-dir)package.json)
+
