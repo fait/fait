@@ -15,7 +15,7 @@ docs: $(md-files)
 
 docs/%.mk.md: %.mk
 	mkdir -p $(@D)
-	tail +8 < $< | sed 's/^\([^#]\)/    \1/ ; s/^# *//' > $@
+	node process-docs.js $< > $@
 
 docs/%.mk.md: docs/core/%.mk.md
 	mv $< $@
