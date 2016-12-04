@@ -30,7 +30,7 @@ try {
 	if(isBareModule(module)) {
 		console.log(path.join('node_modules', module, 'index.mk'));
 	} else {
-		console.log(chalk.red('✘') + ' ' + chalk.grey(e.message));
+		console.log(chalk.red('✘') + ' ' + chalk.grey.bold(e.message));
 		process.exit(1);
 	}
 }

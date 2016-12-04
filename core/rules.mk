@@ -5,12 +5,8 @@
 #  ╺══════════╸
 #   rules.mk
 #
-#   fait's built-in rules, to define main and ensure the npm installer is set up
-#   if it's been removed from the bootstrap.
-#
-#   Dummy task to ensure that main is always defined first, i.e. is what runs when
-#   make is run with no arguments.
-main :: ; @:
+#   fait's built-in rules. Currently there's only one of these but there may be more
+#   in the future.
 #
 #   This is in the bootstrap, but just in case, define it here as well. When trying
 #   to include a module, install it if it doesn't exist or package.json has changed.
