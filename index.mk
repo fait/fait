@@ -10,12 +10,6 @@
 #     1. Variables that need to be in the entry point so we can set up folder detection
 #     2. Includes/requires of things in core
 #
-#   Not being included from the entry makefile breaks a number of assumptions we've made,
-#   so we need to assert that that's the case.
-ifneq ($(words $(MAKEFILE_LIST)),2)
-$(error fait must be included from the entry makefile)
-endif
-#
 #   Hopefully, this is the first variable Make sees, so the only currently-defined
 #   variables are built-ins.
 ~built-in-variables := $(.VARIABLES)
@@ -25,6 +19,26 @@ endif
 #   in. 
 ~orig-file := $(abspath $(lastword $(MAKEFILE_LIST)))
 ~orig-dir := $(dir $(~orig-file))
+~entry-makefile := $(abspath $(firstword $(MAKEFILE_LIST)))
+~including-makefile := $(abspath $(lastword $(filter-out $(lastword $(MAKEFILE_LIST)), $(MAKEFILE_LIST))))
+#
+#   Shell out to chalk to format colours.
+~chalk = $(shell /usr/bin/env FORCE_COLOR=1 $(~orig-dir)node_modules/.bin/chalk $(1) $(2))
+#
+#   Somewhat nicer error messages.
+~error = $(eval $(error $(call ~chalk, red, ✘)$(1)))
+#
+#   Not being included from the entry makefile breaks a number of assumptions we've made,
+#   so we need to assert that that's the case.
+ifneq ($(~including-makefile),$(~entry-makefile))
+define ~error-message
+$(call ~chalk, grey bold, "fait must be included from the entry makefile")
+
+Expected include in: $(call ~chalk, cyan italic, $(~entry-makefile))
+Include actually in: $(call ~chalk, cyan italic, $(~including-makefile))
+endef
+$(call ~error, $(~error-message))
+endif
 #
 #   ~module-file and ~module-dir are how makefile-relative requires work. They usually
 #   get set by require itself but this file's just been included.
