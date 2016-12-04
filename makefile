@@ -6,10 +6,11 @@ main: docs
 	cd docs ;\
 	git pull ;\
 	git add -A ;\
-	git commit -am "update" ;\
+	git commit -m "update" ;\
 	git push
 
-	git commit -am "update docs"
+	git add docs
+	git commit -m "update docs"
 
 docs: $(md-files)
 
