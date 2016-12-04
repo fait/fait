@@ -3,6 +3,7 @@
 #   │ ╭─┤ │ │
 #   ┴ ╰─╰ ┴ ╰╯
 #  ╺══════════╸
+#   bootstrap
 #
 #  install missing modules
 #
