@@ -9,7 +9,7 @@
 #
 #     1. If any of these rules resolve to a folder, search for index.mk or the main
 #        field from package.json in the folder if it exists.
-#     2. Relative paths (prefixed with ./ or ../) are searched for relative to the
+#     2. Relative paths (prefixed with `./` or `../`) are searched for relative to the
 #        file that called require.
 #     3. Non-relative paths are searched for in node_modules in the directory of the
 #        file that called require, or node_modules in its ancestors.
@@ -17,7 +17,7 @@
 #   Most of this functionality is provided by resolve.js and the resolve module on npm.
 #
 #   For requires relative to the current file/directory, we need to know where that
-#   is. Make doesn't provide any way of doing that apart for MAKEFILE_LIST, which is
+#   is. Make doesn't provide any way of doing that apart for `MAKEFILE_LIST`, which is
 #   only usable if queried in each file at the very top, before any includes. Since
 #   we don't want modules to have to have any boilerplate, that's out of the question.
 #
