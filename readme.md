@@ -3,6 +3,8 @@
 </h1>
 <h4 align="center">Twenty-first century Makefiles</h4>
 
+fait is a toolkit for writing modular, maintainable, modern makefiles.
+
 ## Installation
 
 ```sh

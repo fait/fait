@@ -40,7 +40,7 @@ endef
 $(call ~error, $(~error-message))
 endif
 #
-#   ~module-file and ~module-dir are how makefile-relative requires work. They usually
+#   `~module-file` and `~module-dir` are how makefile-relative requires work. They usually
 #   get set by require itself but this file's just been included.
 ~module-file := $(~orig-file)
 ~module-dir = $(dir $(~module-file))
@@ -54,7 +54,7 @@ $(call require, ./core/rules)
 #   Need to be in the same directory as package.json to get the version.
 fait-version := $(module-version)
 #
-#   Immediately after this file we're in the entry makefile. Usually, ~module-file would
-#   be restored by ~post-require but that won't work here. We know that the entry file
-#   is the first one in the MAKEFILE_LIST, so we can use that.
-~module-file := $(abspath $(firstword $(MAKEFILE_LIST)))
+#   Immediately after this file we're in the entry makefile. Usually, `~module-file` would
+#   be restored by ~post-require but that won't work here, so set to `~entry-makefile` because
+#   that's what it is.
+~module-file := $(~entry-makefile)

@@ -14,8 +14,8 @@
 #   Warn about undefined things to help us catch typos.
 MAKEFLAGS += --warn-undefined-variables --warn-undefined-functions
 #
-#   Add node_modules to $PATH so we don't have to prefix it everywhere. Also set
-#   the shell because macOS's make seems to need it for $PATH to work.
+#   Add node_modules to `$PATH` so we don't have to prefix it everywhere. Also set
+#   the shell because macOS's make seems to need it for `$PATH` to work.
 export SHELL := /bin/bash
 export PATH := $(shell npm bin):$(PATH)
 #

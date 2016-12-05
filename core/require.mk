@@ -26,8 +26,8 @@
 #   that set a variable to the required file and restore that variable to the previous
 #   value after the require.
 #
-#   In ~require-pre, we store the old ~module-file so it can be restored by
-#   ~require-post, and we shell out to resolve.js to perform the actual module search.
+#   In `~require-pre`, we store the old `~module-file` so it can be restored by
+#   `~require-post`, and we shell out to resolve.js to perform the actual module search.
 define ~require-pre
 ~prev-module-file := $(~module-file)
 ~module-file := $(shell $(~orig-dir)resolve.js $(1) $(~module-dir))
@@ -62,5 +62,5 @@ $(eval -include $(~module-file))
 $(eval $(~require-post))
 endef
 #
-#   Wrap ~require itsef in an eval so it can be used with just call.
+#   Wrap `~require` itsef in an eval so it can be used with just call.
 require = $(eval $(call ~require, $(1)))

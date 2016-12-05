@@ -7,12 +7,12 @@
 #   
 #   Functions to *make* your life easier.
 #
-#   Add a folder to the shell PATH.
+#   Add a folder to the shell `PATH`.
 define register-bin
 export PATH := $(1):$(PATH)
 endef
 #
-#   Add this module's npm bin to the shell PATH.
+#   Add this module's npm bin to the shell `PATH`.
 define register-npm-bin
 $(eval $(call register-bin, $(~module-dir)node_modules/.bin))
 endef
