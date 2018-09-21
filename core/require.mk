@@ -48,7 +48,7 @@ endef
 #   function is eval'd, so it actually happens between pre and post, and not after.
 #
 #   Finally, it's a conditional include to support lazy installation of modules. If
-#   a require call that looks like a bare module is run but he file isn't found,
+#   a require call that looks like a bare module is run but the file isn't found,
 #   resolve.js returns the likely path anyway instead of erroring. The nonexistent
 #   include file is then made by the target in rules.mk, which installs the probable
 #   module name from npm. This allows first use of fait without installing the entire
@@ -62,5 +62,5 @@ $(eval -include $(~module-file))
 $(eval $(~require-post))
 endef
 #
-#   Wrap `~require` itsef in an eval so it can be used with just call.
+#   Wrap `~require` itself in an eval so it can be used with just call.
 require = $(eval $(call ~require, $(1)))
