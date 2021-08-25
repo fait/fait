@@ -8,19 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/quarterto/fait.git"
+    "url": "git+https://github.com/fait/fait.git"
   },
   "keywords": [
     "make",
     "makefile",
     "fait"
   ],
-  "author": "Matt Brennan <matt@153.io> (http://blog.153.io/)",
+  "author": "Kara Brightwell <kara@ghost.computer>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/quarterto/fait/issues"
+    "url": "https://github.com/fait/fait/issues"
   },
-  "homepage": "https://github.com/quarterto/fait#readme",
+  "homepage": "https://github.com/fait/fait#readme",
   "dependencies": {
     "@quarterto/is-installing-package": "^1.1.0",
     "chalk": "^1.1.3",
